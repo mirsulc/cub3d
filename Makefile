@@ -9,6 +9,7 @@ SRC	=	src/main.c \
 		src/game.c \
 		src/colors.c \
 		src/moves.c \
+		src/raycasting.c \
 		
 
 LIBFT_PATH	= libft/

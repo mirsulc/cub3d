@@ -44,16 +44,15 @@ int	suffix_check(char *filename)
 	return (0);
 }
 
-int	map_check(char *filename)
+int	map_check(char *filename, t_data *data)
 {
 	int		fd ;
 	int		i;
 	char	*b = NULL;
-	
-	t_map	map;
+	t_map	map = data->mapa;
 	
 	i = 0;
-	map_init(&map);
+
 	fd = open(filename, O_RDONLY);
 	if (fd == -1)
 		error_function(2);
@@ -78,7 +77,9 @@ int	map_check(char *filename)
 	ft_printf("line_index: %d\n", map.line_index);
 	close(fd);
 	map_consistence_control(&map, filename);
-//	get_starting_position(&map);
+	data->mapa = map;
+//	ft_printf("kontrola barvy yyyyyyyyy %s\n", data->mapa.C_id);
+	game_start(data);
 //	ft_printf("x pozice: %d, y pozice: %d, uhel: %c\n", map.char_pos_x, map.char_pos_y, map.starting_angle);
 
 
@@ -88,14 +89,17 @@ int	map_check(char *filename)
 
 int	main(int argc, char **argv)
 {	
+	t_data	data;
+	
 	if (argc != 2)
 	{
 		ft_printf("wrong number of arguments\n");
 		return (1);
 	}
 //	data_initializer(&data);		asi blbost...
+	map_init(&data.mapa);
 	suffix_check(argv[1]);
-	map_check(argv[1]);
+	map_check(argv[1], &data);
 //	cleaning(&data);
 	return (0);
 }
@@ -224,7 +228,3 @@ int	map_line_counter(int fd)
 	close(fd);
 	return(line);
 }
-
-
-	
-

@@ -67,7 +67,7 @@ void	map_consistence_control_7(t_map *map, char **cont) //kontroluje mapu od kon
 		ft_printf(": %s.\n", map->grid[i]);
 	get_starting_position(map);
 	ft_printf("x pozice: %d, y pozice: %d, smer: %c\n", map->char_pos_x, map->char_pos_y, map->starting_angle);
-	game_start(map);
+//	game_start(map);
 //	map_cleaning(map);
 }
 

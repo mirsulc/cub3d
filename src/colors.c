@@ -24,3 +24,33 @@ COLOR	ml_color_at(mlx_image_t *img, int x, int y)
 //	ft_printf("barva:, %u\n", pixel);
 	return (*pixel);
 }
+
+uint32_t	convert_colors(char *str)
+{
+	char	**rgb;
+	uint32_t		res;
+
+	rgb = ft_split(str, ',');
+
+	res = 0;
+	res += ft_atoi(rgb[0]) << 24;
+	res += ft_atoi(rgb[1]) << 16;
+	res += ft_atoi(rgb[2]) << 8;
+	res += 255;
+	free_arrays(rgb);
+	return (res);
+}
+
+void	free_arrays(char **array)
+{
+	int	i;
+
+	i = 0;
+	while (array[i])
+	{
+		free(array[i]);
+		i++;
+	}
+	free(array[i]);
+	free(array);
+}
