@@ -17,9 +17,12 @@ void	semi_cleaning(t_map *map, char **cont)	//zahazujeme puvodni verzi mapy a uk
 {
 	int	i;
 	
-	i = -1;
-	while(map->grid[++i])		//osvobozujeme puvodni verzi mapy
-		free(map->grid[i]);
+	i = 0;
+	while(i < map->height)		//osvobozujeme puvodni verzi mapy
+	{
+        	free(map->grid[i]);
+                i++;
+        }
 	i = -1;
 	while(++i < map->height)
 		map->grid[i] = strdup(cont[i]);	//ukazujeme na nowou verzi mapy
