@@ -12,7 +12,7 @@
 
 #include "../include/cub3d.h"
 
-COLOR	ml_color_at(mlx_image_t *img, int x, int y)
+COLOR	ml_color_at(mlx_texture_t *img, int x, int y)
 {
 	COLOR	*pixel;
 
@@ -20,7 +20,8 @@ COLOR	ml_color_at(mlx_image_t *img, int x, int y)
 		x = img->width - 1;
 	if (y >= img->height)
 		y = img->height - 1;
-	pixel = (COLOR *)(img->pixels + (x + y * img->width) * sizeof(COLOR));
+	pixel = (COLOR *)&img->pixels[(x + y * img->width) * sizeof(COLOR)];
+	ft_printf("111111111  pixel[0]: %u\n", pixel[0]);
 //	ft_printf("barva:, %u\n", pixel);
 	return (*pixel);
 }
@@ -40,6 +41,26 @@ uint32_t	convert_colors(char *str)
 	free_arrays(rgb);
 	return (res);
 }
+uint32_t	convert_colors_2(mlx_texture_t *img, int x, int y)
+{
+	COLOR *pixel;
+	uint32_t	res;
+//	int	i = 0;
+	pixel = (COLOR *)(img->pixels + (x + y * img->width) * 4);
+	res = 0;
+	res += pixel[0] << 24;
+	res += pixel[1] << 16;
+	res += pixel[2] << 8;
+	res += pixel[3];
+/*	while(pixel[i])
+	{
+		free(pixel[i]);
+		i++;
+	}*/
+//	free(pixel);
+	return(res);
+}
+
 
 void	free_arrays(char **array)
 {

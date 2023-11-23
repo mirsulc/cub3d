@@ -37,16 +37,15 @@ void	map_cleaning(t_map *map)
 	int	i;	
 	
 	i = -1;
-	free(map->S_id);
-	free(map->W_id);
-	free(map->N_id);
-	free(map->E_id);
-	free(map->C_id);
-	free(map->F_id);
+	free((char*)map->S_id);
+	free((char*)map->W_id);
+	free((char*)map->N_id);
+	free((char*)map->E_id);
+	free((char*)map->C_id);
+	free((char*)map->F_id);
 	while(++i < map->height)
 		free(map->grid[i]);
 	free(map->grid);
-	
 }
 
 void	cleaning(t_data *data)
@@ -54,6 +53,13 @@ void	cleaning(t_data *data)
 //	free(data->mapa->S_id);
 //	data->mapa->S_id = NULL;
 //	free(data->mapa);
+	mlx_delete_texture(data->s_t);
+	mlx_delete_texture(data->n_t);
+	mlx_delete_texture(data->w_t);
+	mlx_delete_texture(data->e_t);
+
+	exit(1);
+	
 }
 
 

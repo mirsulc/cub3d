@@ -23,10 +23,10 @@
 # include "../MLX42/include/MLX42/MLX42.h"
 # include "../libft/libft.h"
 
-# define WIDTH 1200
-# define HEIGHT 800
+# define WIDTH 1920
+# define HEIGHT 1080
 
-# define COLOR unsigned int
+# define COLOR uint8_t
 
 
 
@@ -49,6 +49,7 @@ typedef struct s_map
 	int	char_pos_x;		//X pozice hrace 
 	int	char_pos_y;		//Y pozice hrace
 	char	starting_angle;		//E/S/W/N na zacatku hry
+
 	
 	
 }	t_map;
@@ -56,9 +57,18 @@ typedef struct s_map
 typedef struct s_data
 {
 	mlx_t	*mlx;
+	const char	*texture;
 	mlx_texture_t	*img_t;
 	mlx_image_t	*img2;
 	mlx_image_t	*obr;
+	mlx_texture_t	*n_t;
+	mlx_image_t	*north;
+	mlx_texture_t	*s_t;
+	mlx_image_t	*south;
+	mlx_texture_t	*e_t;
+	mlx_image_t	*east;
+	mlx_texture_t	*w_t;
+	mlx_image_t	*west;
 	void	*mlx_win;
 	double	rot_speed;	//rychlost otaceni
 	double	init_angle;	//uvodni uhel (sever = 0, ...)
@@ -90,6 +100,13 @@ typedef struct s_data
 	int	drawend;	//nenizsi bod vykreslovani sloupce
 	int	ceiling;	//barva stropu
 	int	floor;		//barva podlahy
+	int	texture_y;	//y pozice pixelu textury, ktery vykreslujeme na stenu
+	int	texture_x;	//x pozice pixelu textury, ktery vykreslujeme na stenu
+	double	texture_start;	//prvni pixel textury, ktery vykreslujeme v danem sloupci
+	double	texture_end;	//posledni pixel textury, ktery vykreslujeme v danem sloupci
+	double	texture_range;	//rozsah mezi texture_end a texture_start
+	double	tex_point_ratio;//kolik bodu na jeden pixel textury
+	mlx_texture_t *actual_texture;	//textura pro aktualni sloupec, ktery vykreslujeme
 	int	i;
 	t_map	mapa;
 
@@ -126,10 +143,12 @@ void	setting_starting_angle(t_data *data);
 int	game_start(t_data *data);
 void	data_init(t_data *data);
 
+
 //colors
-COLOR	ml_color_at(mlx_image_t *img, int x, int y);
+COLOR	ml_color_at(mlx_texture_t *img, int x, int y);
 uint32_t	convert_colors(char *str);
 void	free_arrays(char **array);
+uint32_t	convert_colors_2(mlx_texture_t *img, int x, int y);
 
 //moves
 void	move_forward(t_data *data);
@@ -148,6 +167,9 @@ void	calculate_sidedist(t_data *data);
 void	looking_for_wals(t_data *data);
 void	calculate_height(t_data *data);
 uint32_t	color(t_data *data);
+mlx_texture_t	*choose_texture(t_data *data);
+void	count_texture_coordinates(t_data *data, int temp);
+int	count_x_of_texture(t_data *data);
 
 
 #endif

@@ -53,6 +53,7 @@ int	map_check(char *filename, t_data *data)
 	
 	i = 0;
 
+
 	fd = open(filename, O_RDONLY);
 	if (fd == -1)
 		error_function(2);
@@ -112,43 +113,44 @@ int	map_textures(char *map_line, t_map *map, int index)
 		return(1);
 	while(map_line[++i])
 	{
-		if(map_line[i] == 'N' && map_line[i + 1] == 'O')
+		if(map_line[i] == 'N' && map_line[i + 1] == 'O' && map_line[i + 2] == ' ')
 		{
 			map->N_id = texture_extractor(map, map_line);
 			if(index > map->line_index)
 				map->line_index = index;
 		}
-		else if(map_line[i] == 'E' && map_line[i + 1] == 'A')
+		else if(map_line[i] == 'E' && map_line[i + 1] == 'A' && map_line[i + 2] == ' ')
 		{
 			map->E_id = texture_extractor(map, map_line);
 			if(index > map->line_index)
 				map->line_index = index;
 		}
-		else if(map_line[i] == 'S' && map_line[i + 1] == 'O')
+		else if(map_line[i] == 'S' && map_line[i + 1] == 'O' && map_line[i + 2] == ' ')
 		{
 			map->S_id = texture_extractor(map, map_line);
 			if(index > map->line_index)
 				map->line_index = index;
 		}
-		else if(map_line[i] == 'W' && map_line[i + 1] == 'E')
+		else if(map_line[i] == 'W' && map_line[i + 1] == 'E' && map_line[i + 2] == ' ')
 		{
 			map->W_id = texture_extractor(map, map_line);
 			if(index > map->line_index)
 				map->line_index = index;
 		}
-		else if(map_line[i] == 'C')
+		else if(map_line[i] == 'C' && map_line[i + 1] == ' ')
 		{
 			map->C_id = texture_extractor_2(map, map_line);
 			if(index > map->line_index)
 				map->line_index = index;
 		}
-		else if(map_line[i] == 'F')
+		else if(map_line[i] == 'F' && map_line[i + 1] == ' ')
 		{
 			map->F_id = texture_extractor_2(map, map_line);
 			if(index > map->line_index)
 				map->line_index = index;
 		}
 	}
+	// pridat kontrolu platnostii vsech hodnot - jestli nejsou = null...
 	return (0);
 }
 
@@ -159,10 +161,34 @@ char	*texture_extractor(t_map *map, char *map_line)
 	if(!map_line)
 		return(NULL);
 	ft_printf("texture line:%s\n", map_line);
-	while(*map_line != '.')
+	while(*map_line != 'i')
 		map_line++;
 	dest = ft_strdup(map_line);
 	return(dest);
+	/*char dest[40];
+	int	i = 0;
+	
+	if(!map_line)
+		return(NULL);
+	while(*map_line != 'i')
+		map_line++;
+//	i = ft_strlen(map_line);
+	while(*map_line)
+	{
+		dest[i] = *map_line;
+		i++;
+		map_line++;
+	}
+	dest[i] = '\0';
+	ft_printf("      texture line:%s\n", dest);
+	if(c == 'n')
+	{
+		map->north_p = mlx_load_png((const char)dest);
+		map->north = mlx_texture_to_image(data->mlx, map->north_p);
+		ft_printf("tohle probehlo           ok");
+	}
+		
+	return(NULL);*/
 }
 char	*texture_extractor_2(t_map *map, char *map_line)
 {

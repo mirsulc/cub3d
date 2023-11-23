@@ -21,6 +21,7 @@ static void	key_hook(mlx_key_data_t keydata, void *param)
 	
 	if (mlx_is_key_down(data->mlx, MLX_KEY_ESCAPE))
 		exit(1);
+//		cleaning(data);
 	if (keydata.key == MLX_KEY_W && keydata.action == MLX_PRESS)
 		move_forward(data);
 	if (keydata.key == MLX_KEY_S && keydata.action == MLX_PRESS)
@@ -57,10 +58,24 @@ int	game_start(t_data *data)
 		puts(mlx_strerror(mlx_errno));
 		return (EXIT_FAILURE);
 	}
-	data->img_t = mlx_load_png("include/head.png");
+	data->img_t = mlx_load_png("img/head.png");
 	data->img2 = mlx_texture_to_image(data->mlx, data->img_t);
-
+	data->n_t = mlx_load_png("img/1.png");
+	printf("            map->N_id: %s\n", data->mapa.N_id);
+	data->e_t = mlx_load_png("img/2.png");
+	data->s_t = mlx_load_png("img/3.png");
+	data->w_t = mlx_load_png("img/4.png");
+//	data->north = mlx_texture_to_image(data->mlx, data->n_t);
+//	data->east = mlx_texture_to_image(data->mlx, data->e_t);
+//	data->south = mlx_texture_to_image(data->mlx, data->s_t);
+//	data->west = mlx_texture_to_image(data->mlx, data->w_t);
+	
+	
 	mlx_delete_texture(data->img_t);
+	//mlx_delete_texture(data->n_t);
+	//mlx_delete_texture(data->s_t);
+	//mlx_delete_texture(data->e_t);
+	//mlx_delete_texture(data->w_t);
 	img = mlx_new_image(data->mlx, 400, 300);
 //	data.img2 = mlx_new_image(data.mlx, WIDTH, HEIGHT);
 //	memset(img->pixels, 255, img->width * img->height * sizeof(int32_t));
@@ -105,6 +120,12 @@ int	game_start(t_data *data)
 
 void	data_init(t_data *data)
 {
+	data->img2 = NULL;
+	data->obr = NULL;
+	data->north = NULL;
+	data->south = NULL;
+	data->east = NULL;
+	data->west = NULL;
 	data->floor = convert_colors(data->mapa.F_id);
 	data->ceiling = convert_colors(data->mapa.C_id);
 	data->rot_speed = M_PI / 24;
