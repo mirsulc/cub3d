@@ -23,153 +23,143 @@
 # include "../MLX42/include/MLX42/MLX42.h"
 # include "../libft/libft.h"
 
-# define WIDTH 1920
-# define HEIGHT 1080
+# define WIDTH 1400
+# define HEIGHT 1000
 
 # define COLOR uint8_t
 
-
-
 typedef struct s_map
 {
-	int	total_char;
-	int	nbr_of_lines;		//pocet radku v mape
-	int	line_index;		//cislo radku na kterem je posledni informace pred mapou
-	int	lenght;			//nejdelsi radek mapy
-	int	flag;			//pomocne, pro vypocet radku, ktere zabiraji textury
-	int	height;
-	int	consistence;
-	char	*S_id;			//adresa pozadi zdi Jih
-	char	*N_id;			//adresa pozadi zdi Sever
-	char	*E_id;			//adresa pozadi zdi Vychod
-	char	*W_id;			//adresa pozadi zdi Zapad
-	char	*C_id;			//barva stropu
-	char	*F_id;			//barva podlahy
+	int		total_char;
+	int		nbr_of_lines;
+	int		line_index;
+	int		lenght;
+	int		flag;
+	int		height;
+	int		consistence;
+	char	*s_id;
+	char	*n_id;
+	char	*e_id;
+	char	*w_id;
+	char	*c_id;
+	char	*f_id;
 	char	**grid;
-	int	char_pos_x;		//X pozice hrace 
-	int	char_pos_y;		//Y pozice hrace
-	char	starting_angle;		//E/S/W/N na zacatku hry
-
-	
-	
+	int		char_pos_x;
+	int		char_pos_y;
+	char	starting_angle;
 }	t_map;
 
 typedef struct s_data
 {
-	mlx_t	*mlx;
-	const char	*texture;
-	mlx_texture_t	*img_t;
-	mlx_image_t	*img2;
-	mlx_image_t	*obr;
+	mlx_t			*mlx;
+	mlx_image_t		*obr;
 	mlx_texture_t	*n_t;
-	mlx_image_t	*north;
 	mlx_texture_t	*s_t;
-	mlx_image_t	*south;
 	mlx_texture_t	*e_t;
-	mlx_image_t	*east;
 	mlx_texture_t	*w_t;
-	mlx_image_t	*west;
-	void	*mlx_win;
-	double	rot_speed;	//rychlost otaceni
-	double	init_angle;	//uvodni uhel (sever = 0, ...)
-	double	actual_angle;	//aktualni uhel
-	double	ray_angle;	//uhel paprsku, kterym hledame zdi
-	double	move_speed;	//rychlost pohybu vpred i do stran
-	int	init_pos_x;	//uvodni pozice x
-	int	init_pos_y;	//uvodni pozice y
-	double	pos_x;		//aktualni pozice x
-	double	pos_y;		//aktualni pozice y
-	double	lo_x;		//rozdil mezi pos_x a nejnizsim celym cislem
-	double	lo_y;		//rozdil mezi pos_y a nejnizsim celym cislem
-	double	hi_x;		//rozdil mezi pos_x a nejvyssim celym cislem
-	double	hi_y;		//rozdil mezi pos_y a nejvyssim celym cislem
-	int	quadrant;	//urcuje kvadrant to ktereho smeruje paprsek
-	int	wall;		//hodnota 0 nebo 1 podle toho, jestli jsme narazili na zed
-	char	x_or_y;		//urcuje, jestli je zed za osou X nebo Y
-	int	map_x;		//souradnice pro kontrolu zdi pri raycastingu
-	int	map_y; 		//souradnice pro kontrolu zdi pri raycastingu
-	double	sidedist_x;	//delka k nejblizsi ose X pri raycastingu
-	double	sidedist_y;	//delka k nejblizsi ose Y pri raycastingu
-	double	deltadist_x;	//delka mezi osami X pri raycastingu
-	double	deltadist_y;	//delka mezi osami Y pri raycastingu
-	int	direction_x;	//hodnota 1 nebo -1 podle toho jestli jdeme nahoru nebo dolu
-	int	direction_y;	//hodnota 1 nebo -1 podle toho, jetsli jdem doleva nebo doprava
-	double	distance_to_wall;	//vydalenost ke zdi pri raycastingu
-	int	line_height;	//vyska steny, kterou vykreslujeme
-	int	drawstart;	//pocatecni bod vykreslovani sloupce
-	int	drawend;	//nenizsi bod vykreslovani sloupce
-	int	ceiling;	//barva stropu
-	int	floor;		//barva podlahy
-	int	texture_y;	//y pozice pixelu textury, ktery vykreslujeme na stenu
-	int	texture_x;	//x pozice pixelu textury, ktery vykreslujeme na stenu
-	double	texture_start;	//prvni pixel textury, ktery vykreslujeme v danem sloupci
-	double	texture_end;	//posledni pixel textury, ktery vykreslujeme v danem sloupci
-	double	texture_range;	//rozsah mezi texture_end a texture_start
-	double	tex_point_ratio;//kolik bodu na jeden pixel textury
-	mlx_texture_t *actual_texture;	//textura pro aktualni sloupec, ktery vykreslujeme
-	int	i;
-	t_map	mapa;
-
-	
+	void			*mlx_win;
+	double			rot_speed;
+	double			init_angle;
+	double			actual_angle;
+	double			ray_angle;
+	double			move_speed;
+	int				init_pos_x;
+	int				init_pos_y;
+	double			pos_x;
+	double			pos_y;
+	double			lo_x;
+	double			lo_y;
+	double			hi_x;
+	double			hi_y;
+	int				quadrant;
+	int				wall;
+	char			x_or_y;
+	int				map_x;
+	int				map_y;
+	double			sidedist_x;
+	double			sidedist_y;
+	double			deltadist_x;
+	double			deltadist_y;
+	int				direction_x;
+	int				direction_y;
+	double			distance_to_wall;
+	int				line_height;
+	int				drawstart;
+	int				drawend;
+	int				ceiling;
+	int				floor;
+	int				texture_y;
+	int				texture_x;
+	double			texture_start;
+	double			texture_end;
+	double			texture_range;
+	double			tex_point_ratio;
+	mlx_texture_t	*actual_texture;
+	int				i;
+	t_map			mapa;
 }	t_data;
 
-void	error_function(int i);
-int	suffix_check(char *filename);		//kontroluje priponu souboru mapy
-int	map_textures(char *map_line, t_map *map,int index);	//hleda v souboru mapy textury
-char	*texture_extractor(t_map *map, char *map_line);		//pridava texturu do struktury mapy
-char	*texture_extractor_2(t_map *map, char *map_line);	//pridava barvu stropu a podlahy
-void	data_initializer(t_data *data);
-void	cleaning(t_data *data);
-void	map_cleaning(t_map *map);
-void	semi_cleaning(t_map *map, char **cont);
-int	map_check(char *filename, t_data *data);
-void	map_init(t_map *map);
-int	map_line_counter(int fd);		//pocita kolik je v souboru mapy radku
-void	map_consistence_control(t_map *map, char *filename);
-void	map_consistence_control_2(t_map *map, int y);
-void	map_consistence_control_3(t_map *map, int y);
-void	map_consistence_control_4(t_map *map, int y);
-void	map_consistence_control_5(t_map *map, int y);
-void	map_consistence_control_6(t_map *map, int y);
-void	map_consistence_control_7(t_map *map, char **cont);
-char	**map_corrector(t_map *map, int y);
-char	**new_map_fill(t_map *map, char **new_map, int y);
-char	**new_map_fill_2(t_map *map, char **new_map, int y);
-void	filling_spces_by_ones(t_map *map);
-void	get_starting_position(t_map *map);
-void	setting_starting_angle(t_data *data);
-
-//game.c
-int	game_start(t_data *data);
-void	data_init(t_data *data);
-
-
-//colors
-COLOR	ml_color_at(mlx_texture_t *img, int x, int y);
-uint32_t	convert_colors(char *str);
-void	free_arrays(char **array);
-uint32_t	convert_colors_2(mlx_texture_t *img, int x, int y);
-
-//moves
-void	move_forward(t_data *data);
-void	move_back(t_data *data);
-void	move_left(t_data *data);
-void	move_right(t_data *data);
-void	turn_right(t_data *data);
-void	turn_left(t_data *data);
-void	prekresli_mapu(t_data *data);
-void	new_obraz(t_data *data);
-
-//raycasting
-void	count_lo_hi(t_data *data);
-void	count_quadrant(t_data *data);
-void	calculate_sidedist(t_data *data);
-void	looking_for_wals(t_data *data);
-void	calculate_height(t_data *data);
-uint32_t	color(t_data *data);
 mlx_texture_t	*choose_texture(t_data *data);
-void	count_texture_coordinates(t_data *data, int temp);
-int	count_x_of_texture(t_data *data);
+uint32_t		convert_colors_2(mlx_texture_t *img, int x, int y);
+uint32_t		convert_colors(char *str);
+uint32_t		color(t_data *data);
+void			error_function(int i);
+int				suffix_check(char *filename);
+void			map_textures(char *map_line, t_map *map, int index);
+char			*texture_extractor(t_map *map, char *map_line);
+char			*texture_extractor_2(t_map *map, char *map_line);
+void			data_initializer(t_data *data);
+void			cleaning(t_data *data);
+void			map_cleaning(t_map *map);
+void			semi_cleaning(t_map *map, char **cont);
+void			map_check(char *filename, t_data *data);
+void			map_init(t_map *map);
+int				map_line_counter(int fd);
+void			map_consistence_control(t_map *map, char *filename);
+int				map_consistence_ext(t_map *map);
+void			map_consistence_control_2(t_map *map, int y);
+void			map_consistence_control_3(t_map *map, int y);
+void			map_consistence_control_4(t_map *map, int y);
+void			map_consistence_control_5(t_map *map, int y);
+void			map_consistence_control_6(t_map *map, int y);
+void			map_consistence_control_7(t_map *map, char **cont);
+char			**map_corrector(t_map *map, int y);
+char			**new_map_fill(t_map *map, char **new_map, int y);
+char			**new_map_fill_2(t_map *map, char **new_map, int y);
+void			filling_spces_by_ones(t_map *map);
+void			get_starting_position(t_map *map);
+void			setting_starting_angle(t_data *data);
+char			*ft_strdup_cub(const char *s);
+void			closeit(void *data);
+void			texture_control(t_map *map);
+void			map_textures_ext(char *map_line, t_map *map, int index, int i);
+void			map_check_ext(int nbr_of_lines, int i, t_map *map, int fd);
 
+int				game_start(t_data *data);
+void			data_init(t_data *data);
+void			game_start_ext(t_data *data, mlx_image_t *img);
+
+COLOR			ml_color_at(mlx_texture_t *img, int x, int y);
+void			free_arrays(char **array);
+
+void			move_forward(t_data *data);
+void			move_back(t_data *data);
+void			move_left(t_data *data);
+void			move_right(t_data *data);
+void			turn_right(t_data *data);
+void			turn_left(t_data *data);
+void			new_obraz_ext(t_data *data, int x);
+
+void			new_obraz(t_data *data);
+
+void			count_lo_hi(t_data *data);
+void			count_quadrant(t_data *data);
+void			calculate_sidedist(t_data *data);
+void			looking_for_wals(t_data *data);
+void			calculate_height(t_data *data);
+void			count_texture_coordinates(t_data *data, int temp);
+int				count_x_of_texture(t_data *data);
+int				count_x_1(t_data *data);
+int				count_x_2(t_data *data);
 
 #endif
