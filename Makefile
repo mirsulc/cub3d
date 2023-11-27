@@ -1,15 +1,20 @@
-NAME	=	cub3d
+NAME	=	cub3D
 CC	=	gcc
-FLAGS	=	-Wall -Werror -Wextra
+FLAGS	=	-Wall -Werror -Wextra # -g -fsanitize=address
 
 SRC	=	src/main.c \
 		src/map_control.c \
 		src/map_control_2.c \
+		src/map_control_3.c \
+		src/map_parsing.c \
 		src/cleaning.c \
 		src/game.c \
 		src/colors.c \
 		src/moves.c \
+		src/moves_2.c \
 		src/raycasting.c \
+		src/raycasting_2.c \
+		src/utils.c \
 		
 
 LIBFT_PATH	= libft/
@@ -31,12 +36,10 @@ all: $(LIBFT) $(NAME)
 
 $(LIBFT):
 	@make -C $(LIBFT_PATH)
-	
-
 
 $(NAME): $(OBJ) 
 	$(CC) $(FLAGS) -o $(NAME) $(OBJ) $(LIBFT) $(MLX)  $(MLX_FLAGS)
-	
+
 clean:
 	@$(RM) $(OBJ)
 	@make clean -C $(LIBFT_PATH)
@@ -47,5 +50,4 @@ fclean: clean
 
 re: clean all
 
-.PHONY: all clean fclean re 
-
+.PHONY: all clean fclean re
