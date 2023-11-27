@@ -21,18 +21,15 @@ COLOR	ml_color_at(mlx_texture_t *img, int x, int y)
 	if (y >= img->height)
 		y = img->height - 1;
 	pixel = (COLOR *)&img->pixels[(x + y * img->width) * sizeof(COLOR)];
-	ft_printf("111111111  pixel[0]: %u\n", pixel[0]);
-//	ft_printf("barva:, %u\n", pixel);
 	return (*pixel);
 }
 
 uint32_t	convert_colors(char *str)
 {
-	char	**rgb;
-	uint32_t		res;
+	char		**rgb;
+	uint32_t	res;
 
 	rgb = ft_split(str, ',');
-
 	res = 0;
 	res += ft_atoi(rgb[0]) << 24;
 	res += ft_atoi(rgb[1]) << 16;
@@ -41,26 +38,20 @@ uint32_t	convert_colors(char *str)
 	free_arrays(rgb);
 	return (res);
 }
+
 uint32_t	convert_colors_2(mlx_texture_t *img, int x, int y)
 {
-	COLOR *pixel;
+	COLOR		*pixel;
 	uint32_t	res;
-//	int	i = 0;
+
 	pixel = (COLOR *)(img->pixels + (x + y * img->width) * 4);
 	res = 0;
 	res += pixel[0] << 24;
 	res += pixel[1] << 16;
 	res += pixel[2] << 8;
 	res += pixel[3];
-/*	while(pixel[i])
-	{
-		free(pixel[i]);
-		i++;
-	}*/
-//	free(pixel);
-	return(res);
+	return (res);
 }
-
 
 void	free_arrays(char **array)
 {
@@ -74,4 +65,19 @@ void	free_arrays(char **array)
 	}
 	free(array[i]);
 	free(array);
+}
+
+uint32_t	color(t_data *data)
+{
+	if ((data->quadrant == 1 || data->quadrant == 4) && data->x_or_y == 'x')
+		return (convert_colors_2(data->n_t, data->texture_x, data->texture_y));
+	else if ((data->quadrant == 1
+			|| data->quadrant == 2) && data->x_or_y == 'y')
+		return (convert_colors_2(data->s_t, data->texture_x, data->texture_y));
+	else if ((data->quadrant == 2
+			|| data->quadrant == 3) && data->x_or_y == 'x')
+		return (convert_colors_2(data->e_t, data->texture_x, data->texture_y));
+	else if ((data->quadrant == 3
+			|| data->quadrant == 4) && data->x_or_y == 'y')
+		return (convert_colors_2(data->w_t, data->texture_x, data->texture_y));
 }
