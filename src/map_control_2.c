@@ -18,7 +18,7 @@ void	map_consistence_control_5(t_map *map, int y)
 	int	con;
 
 	con = y;
-	while (map->grid[con])
+	while (map->grid[con])//kontroluje, jestli jsou je posledni znak v radku mapy jednicka
 	{
 		i = 0;
 		while (map->grid[con][i])
@@ -44,7 +44,7 @@ void	map_consistence_control_6(t_map *map, int y)
 	int		x;
 	char	**cont;
 
-	cont = map_corrector(map, y);
+	cont = map_corrector(map, y);//vytvarim z mapy pravidelny obdelnik/ctverec
 	i = 0;
 	while (i < map->lenght)
 	{
@@ -64,7 +64,7 @@ void	map_consistence_control_6(t_map *map, int y)
 	map_consistence_control_7(map, cont);
 }
 
-void	map_consistence_control_7(t_map *map, char **cont)
+void	map_consistence_control_7(t_map *map, char **cont)//a znovu kontroluji hranice
 {
 	int	i;
 	int	x;
@@ -85,7 +85,7 @@ void	map_consistence_control_7(t_map *map, char **cont)
 		}
 		i++;
 	}
-	semi_cleaning(map, cont);
-	filling_spces_by_ones(map);
-	get_starting_position(map);
+	semi_cleaning(map, cont);//cistim pamet po stare mape
+	filling_spces_by_ones(map);//mezery v nove plnim jednickami
+	get_starting_position(map);//zjistuji kterym smerem se hrac diva
 }

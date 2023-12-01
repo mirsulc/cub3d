@@ -21,13 +21,13 @@ int	main(int argc, char **argv)
 		ft_printf("wrong number of arguments\n");
 		return (1);
 	}
-	map_init(&data.mapa);
+	map_init(&data.mapa);	
 	suffix_check(argv[1]);
-	map_check(argv[1], &data);
+	map_check(argv[1], &data);	//kontrola mapy a nasledne spusteni programu
 	return (0);
 }
 
-void	map_init(t_map *map)
+void	map_init(t_map *map)//inicializace promennych ve strukture mapy
 {
 	map->total_char = 0;
 	map->nbr_of_lines = 0;

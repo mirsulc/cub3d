@@ -12,7 +12,7 @@
 
 #include "../include/cub3d.h"
 
-int	suffix_check(char *filename)
+int	suffix_check(char *filename)//kontroluje priponu mapoveho souboru
 {
 	int	i;
 
@@ -25,7 +25,7 @@ int	suffix_check(char *filename)
 	return (0);
 }
 
-void	error_function(int i)
+void	error_function(int i)//chybova hlaseni 
 {
 	if (i == 1)
 		ft_printf("Error:\nwrong map file format\n");
@@ -42,7 +42,7 @@ void	error_function(int i)
 	exit(1);
 }
 
-char	*texture_extractor(t_map *map, char *map_line)
+char	*texture_extractor(t_map *map, char *map_line)//prirazuje adresu textury do struktury mapy
 {
 	char	*dest;
 

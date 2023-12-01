@@ -12,7 +12,7 @@
 
 #include "../include/cub3d.h"
 
-mlx_texture_t	*choose_texture(t_data *data)
+mlx_texture_t	*choose_texture(t_data *data)//vybirame texturu na kereou paprsek hledi
 {
 	if ((data->quadrant == 1 || data->quadrant == 4) && data->x_or_y == 'x')
 		return (data->n_t);
@@ -27,7 +27,7 @@ mlx_texture_t	*choose_texture(t_data *data)
 		return (data->w_t);
 }
 
-void	count_texture_coordinates(t_data *data, int temp)
+void	count_texture_coordinates(t_data *data, int temp)//pocita podklady pro urceni pixelu textury
 {
 	double				ratio;
 	mlx_texture_t		*textura;
@@ -49,7 +49,7 @@ void	count_texture_coordinates(t_data *data, int temp)
 	data->tex_point_ratio = data->line_height / data->texture_range;
 }
 
-int	count_x_of_texture(t_data *data)
+int	count_x_of_texture(t_data *data)//pocita x souradnici pixelu textury
 {
 	double	temp;
 
@@ -78,7 +78,7 @@ int	count_x_of_texture(t_data *data)
 	return (0);
 }
 
-int	count_x_1(t_data *data)
+int	count_x_1(t_data *data)//pocita osovou vzdalenost k bodu na kterz hledime a vypocitava zbytek
 {
 	double	temp;
 

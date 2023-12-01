@@ -12,7 +12,7 @@
 
 #include "../include/cub3d.h"
 
-void	map_consistence_control(t_map *map, char *filename)
+void	map_consistence_control(t_map *map, char *filename)//kontroluje samotnou mapu
 {
 	int		fd;
 	int		control;
@@ -25,7 +25,7 @@ void	map_consistence_control(t_map *map, char *filename)
 	control = read(fd, buf, 4095);
 	buf[control] = '\0';
 	map->grid = ft_split(buf, '\n');
-	y = map_consistence_ext(map);
+	y = map_consistence_ext(map); //radek na kterem by mela zacinat samotna mapa
 	map_consistence_control_2(map, y);
 }
 
@@ -40,9 +40,9 @@ int	map_consistence_ext(t_map *map)
 		i = 0;
 		while (map->grid[y][i])
 		{
-			if (map->grid[y][i] > 32)
+			if (map->grid[y][i] > 32) //kdyz je neco na radku, musi to byt adresa textury
 			{
-				map->flag++;
+				map->flag++;//a tak to tady pricteme
 				break ;
 			}
 			i++;
@@ -59,7 +59,7 @@ void	map_consistence_control_2(t_map *map, int y)
 
 	map->height = map->nbr_of_lines - map->line_index;
 	con = y;
-	while (map->grid[con])
+	while (map->grid[con])//kontroluje pritomnost povolenych znaku v mape
 	{
 		i = 0;
 		while (map->grid[con][i])
@@ -87,7 +87,7 @@ void	map_consistence_control_3(t_map *map, int y)
 
 	characters = 0;
 	con = y;
-	while (map->grid[con])
+	while (map->grid[con])//pocita pocet povolenych znaku v mape
 	{
 		i = 0;
 		while (map->grid[con][i])
@@ -110,7 +110,7 @@ void	map_consistence_control_4(t_map *map, int y)
 	int	con;
 
 	con = y;
-	while (map->grid[con])
+	while (map->grid[con])//kontroluje, zda jsou prni znaky v radku pouze jednicky
 	{
 		i = 0;
 		while (map->grid[con][i])

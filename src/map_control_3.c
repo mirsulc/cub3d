@@ -18,13 +18,13 @@ char	**map_corrector(t_map *map, int y)
 	int		x;
 	char	**new_map;
 
-	new_map = malloc(map->height * sizeof(char *));
+	new_map = malloc(map->height * sizeof(char *));//alokace pameti pro radky nove mapy - 
 	if (!new_map)
 		return (NULL);
 	i = -1;
 	while (++i < map->height)
 	{
-		new_map[i] = malloc(sizeof (char) * (map->lenght + 1));
+		new_map[i] = malloc(sizeof (char) * (map->lenght + 1));//alokace pro vsechny znaky
 		if (!new_map[i])
 			return (NULL);
 		new_map[i][map->lenght] = '\0';
@@ -34,7 +34,7 @@ char	**map_corrector(t_map *map, int y)
 	return (new_map);
 }
 
-char	**new_map_fill(t_map *map, char **new_map, int y)
+char	**new_map_fill(t_map *map, char **new_map, int y) //nove alokovanou pamet mapy plnim mezerami
 {
 	int	i;
 	int	x;
@@ -54,7 +54,7 @@ char	**new_map_fill(t_map *map, char **new_map, int y)
 	return (new_map);
 }
 
-char	**new_map_fill_2(t_map *map, char **new_map, int y)
+char	**new_map_fill_2(t_map *map, char **new_map, int y)//do nove alokovane mapy kopiruju starou
 {
 	int	i;
 	int	x;
@@ -76,7 +76,7 @@ char	**new_map_fill_2(t_map *map, char **new_map, int y)
 	return (new_map);
 }
 
-void	filling_spces_by_ones(t_map *map)
+void	filling_spces_by_ones(t_map *map)//zbyle mezery plnim jednickami
 {
 	int	i;
 	int	y;

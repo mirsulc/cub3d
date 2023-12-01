@@ -12,7 +12,7 @@
 
 #include "../include/cub3d.h"
 
-void	count_lo_hi(t_data *data)
+void	count_lo_hi(t_data *data)//pocita vydalenosti od polohy hrace ke stenam policka, osovou
 {
 	data->lo_x = data->pos_x - floor(data->pos_x);
 	data->lo_y = data->pos_y - floor(data->pos_y);
@@ -20,7 +20,7 @@ void	count_lo_hi(t_data *data)
 	data->hi_y = ceil(data->pos_y) - data->pos_y;
 }
 
-void	count_quadrant(t_data *data)
+void	count_quadrant(t_data *data)//zjistuje do jakeho kvadrantu se diva paprsek
 {
 	if ((data->ray_angle <= 0 && data->ray_angle > (-M_PI / 2))
 		|| (data->ray_angle > (M_PI * 1.5) && data->ray_angle <= (M_PI * 2)))
@@ -36,7 +36,7 @@ void	count_quadrant(t_data *data)
 		data->quadrant = 4;
 }
 
-void	looking_for_wals(t_data *data)
+void	looking_for_wals(t_data *data)//hleda nejblizsi zed ve smeru kazdeho papsku
 {
 	data->wall = 0;
 	data->map_x = (int)data->pos_x;
@@ -47,16 +47,16 @@ void	looking_for_wals(t_data *data)
 		{
 			data->sidedist_x += data->deltadist_x;
 			data->map_x += data->direction_x;
-			data->x_or_y = 'x';
+			data->x_or_y = 'x';//zed je x-ova
 		}
 		else
 		{
 			data->sidedist_y += data->deltadist_y;
 			data->map_y += data->direction_y;
-			data->x_or_y = 'y';
+			data->x_or_y = 'y';//zed je y-ova
 		}
 		if (data->mapa.grid[data->map_x][data->map_y] == '1')
-			data->wall = 1;
+			data->wall = 1;//narazili jsme na zed
 	}
 	if (data->x_or_y == 'x')
 		data->distance_to_wall = data->sidedist_x - data->deltadist_x;
@@ -64,7 +64,7 @@ void	looking_for_wals(t_data *data)
 		data->distance_to_wall = data->sidedist_y - data->deltadist_y;
 }
 
-void	calculate_height(t_data *data)
+void	calculate_height(t_data *data)//pocitame vysku kazdeho zobrazovaneho sloupce 
 {
 	int	temp;
 
@@ -73,7 +73,7 @@ void	calculate_height(t_data *data)
 	temp = data->line_height;
 	if (data->line_height > HEIGHT)
 		data->line_height = HEIGHT;
-	count_texture_coordinates(data, temp);
+	count_texture_coordinates(data, temp);//pocitame souradnice pixelu textury ktery cteme
 	data->drawstart = -data->line_height / 2 + HEIGHT / 2;
 	data->drawend = data->line_height / 2 + HEIGHT / 2;
 	if (data->drawstart < 0)
@@ -82,7 +82,7 @@ void	calculate_height(t_data *data)
 		data->drawend = HEIGHT - 1;
 }
 
-void	calculate_sidedist(t_data *data)
+void	calculate_sidedist(t_data *data)//pocita vzdalenost ke stenam policka ve smeru paprsku
 {
 	data->deltadist_x = 1 / fabs(cos(fabs(data->ray_angle)));
 	data->deltadist_y = 1 / fabs(sin(fabs(data->ray_angle)));

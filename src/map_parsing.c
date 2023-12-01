@@ -25,19 +25,19 @@ void	map_check(char *filename, t_data *data)
 	fd = open(filename, O_RDONLY);
 	if (fd == -1)
 		error_function(2);
-	map.nbr_of_lines = map_line_counter(fd);
+	map.nbr_of_lines = map_line_counter(fd);//pocitame pocet radek v souboru mapy
 	fd = open(filename, O_RDONLY);
-	map_check_ext(map.nbr_of_lines, i, &map, fd);
+	map_check_ext(map.nbr_of_lines, i, &map, fd);//hledame adresy textur na pozadi 
 	if (!map.w_id || !map.s_id || !map.e_id
 		|| !map.n_id || !map.c_id || !map.f_id)
 		error_function(6);
 	close(fd);
-	map_consistence_control(&map, filename);
+	map_consistence_control(&map, filename);//kontroluje samotnou mapu
 	data->mapa = map;
-	game_start(data);
+	game_start(data);//spousti program, pokud kontrola mapy probehla v poradku
 }
 
-void	map_check_ext(int nbr_of_lines, int i, t_map *map, int fd)
+void	map_check_ext(int nbr_of_lines, int i, t_map *map, int fd)//hleda adresy textur v souboru mapy
 {
 	char	*b;
 
@@ -45,13 +45,13 @@ void	map_check_ext(int nbr_of_lines, int i, t_map *map, int fd)
 	while (i < nbr_of_lines)
 	{
 		b = get_next_line(fd);
-		map_textures(b, map, i + 1);
+		map_textures(b, map, i + 1);//pridava adresy textur do struktury map
 		i++;
 		free(b);
 	}
 }
 
-void	map_textures(char *map_line, t_map *map, int index)
+void	map_textures(char *map_line, t_map *map, int index)//adresy textur pridava do struktury 
 {
 	int	i;
 
@@ -78,7 +78,7 @@ void	map_textures(char *map_line, t_map *map, int index)
 	}
 }
 
-void	map_textures_ext(char *map_line, t_map *map, int index, int i)
+void	map_textures_ext(char *map_line, t_map *map, int index, int i)//pokraovani funkce vyse
 {
 	if (map_line[i] == 'S' && map_line[i + 1] == 'O' && map_line[i + 2] == ' ')
 	{

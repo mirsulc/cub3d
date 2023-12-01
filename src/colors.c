@@ -24,7 +24,7 @@ COLOR	ml_color_at(mlx_texture_t *img, int x, int y)
 	return (*pixel);
 }
 
-uint32_t	convert_colors(char *str)
+uint32_t	convert_colors(char *str)//prevadi barvy podlahy a stropu ze souboru mapy
 {
 	char		**rgb;
 	uint32_t	res;
@@ -39,7 +39,7 @@ uint32_t	convert_colors(char *str)
 	return (res);
 }
 
-uint32_t	convert_colors_2(mlx_texture_t *img, int x, int y)
+uint32_t	convert_colors_2(mlx_texture_t *img, int x, int y)//prevadi barvu z pixelu textury
 {
 	COLOR		*pixel;
 	uint32_t	res;
@@ -67,7 +67,7 @@ void	free_arrays(char **array)
 	free(array);
 }
 
-uint32_t	color(t_data *data)
+uint32_t	color(t_data *data)//vola funkci, ktera prevadi barvy z textury podle smeru pohledu 
 {
 	if ((data->quadrant == 1 || data->quadrant == 4) && data->x_or_y == 'x')
 		return (convert_colors_2(data->n_t, data->texture_x, data->texture_y));

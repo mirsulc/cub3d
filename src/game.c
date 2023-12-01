@@ -12,7 +12,7 @@
 
 #include "../include/cub3d.h"
 
-static void	key_hook(mlx_key_data_t keydata, void *param)
+static void	key_hook(mlx_key_data_t keydata, void *param)//zachycuje stisknuti klaves
 {
 	t_data	*data;
 
@@ -38,30 +38,30 @@ int	game_start(t_data *data)
 	mlx_image_t	*img;
 
 	data_init(data);
-	setting_starting_angle(data);
+	setting_starting_angle(data);//podle pismene v mape nastavuji uvodni uhel pohledu hrace
 	data->mlx = mlx_init(WIDTH, HEIGHT, "cube3D", 0);
 	if (!data->mlx)
 	{
 		puts(mlx_strerror(mlx_errno));
 		return (EXIT_FAILURE);
 	}
-	data->n_t = mlx_load_png(data->mapa.n_id);
+	data->n_t = mlx_load_png(data->mapa.n_id);//nacitam adresy textur do MLX
 	data->e_t = mlx_load_png(data->mapa.e_id);
 	data->s_t = mlx_load_png(data->mapa.s_id);
 	data->w_t = mlx_load_png(data->mapa.w_id);
 	if (!data->n_t || !data->e_t || !data->s_t || !data->w_t)
 		error_function(1);
-	img = mlx_new_image(data->mlx, WIDTH, HEIGHT);
-	game_start_ext(data, img);
-	mlx_image_to_window(data->mlx, img, 0, 0);
-	move_forward(data);
-	mlx_key_hook(data->mlx, &key_hook, data);
+	img = mlx_new_image(data->mlx, WIDTH, HEIGHT);//vytvarim novy obraz
+	game_start_ext(data, img);//plnim pozadi barvou podlahy a stropu
+	mlx_image_to_window(data->mlx, img, 0, 0);//pridavam pozadi do okna
+	move_forward(data);//vykresluji prvni okno pomoci pohybu kupredu
+	mlx_key_hook(data->mlx, &key_hook, data);//hook na pohyby pomoci klavesnice
 	mlx_close_hook(data->mlx, closeit, data);
 	mlx_loop(data->mlx);
 	return (EXIT_SUCCESS);
 }
 
-void	game_start_ext(t_data *data, mlx_image_t *img)
+void	game_start_ext(t_data *data, mlx_image_t *img)//plnim pozadi barvou podlahy a stropu
 {
 	int	x;
 	int	i;
@@ -101,7 +101,7 @@ void	data_init(t_data *data)
 	data->move_speed = 0.2;
 	data->init_pos_x = data->mapa.char_pos_y;
 	data->init_pos_y = data->mapa.char_pos_x;
-	data->pos_x = (double)data->init_pos_x + 0.5;
+	data->pos_x = (double)data->init_pos_x + 0.5;//stavim hrace doprostred policka
 	data->pos_y = (double)data->init_pos_y + 0.5;
 	data->lo_x = data->pos_x - (double)floor(data->pos_x);
 	data->lo_y = data->pos_y - (double)floor(data->pos_y);
@@ -118,7 +118,7 @@ void	data_init(t_data *data)
 	data->drawend = 0;
 }
 
-void	setting_starting_angle(t_data *data)
+void	setting_starting_angle(t_data *data)//nastavuji uhel pohledu hrace po startu programu
 {
 	if (data->mapa.starting_angle == 'N')
 		data->init_angle = 0;
